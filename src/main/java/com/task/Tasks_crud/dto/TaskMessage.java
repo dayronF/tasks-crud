@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskMesagge {
+public class TaskMessage {
     private String message;
     
 }
