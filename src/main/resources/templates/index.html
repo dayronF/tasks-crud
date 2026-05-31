@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tareas</title>
+
+    <link rel="stylesheet" th:href="@{/css/Task.css}">
+</head>
+
+<body>
+
+    <script th:src="@{/js/Task.js}"></script>
+
+    <div class="container">
+
+        <header>
+            <h1>Gestión de Tareas</h1>
+
+            <button class="btn-primary" onclick="openCreateModal()">
+                + Nueva tarea
+            </button>
+        </header>
+
+        <div class="filters">
+
+            <input type="number" id="taskId" placeholder="Buscar tarea por ID">
+
+            <button class="btn-primary" onclick="searchTask()">
+                Buscar
+            </button>
+
+            <select id="stateFilter" onchange="filterByState()">
+                <option value="Todos">Todos los estados</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Completada">Completada</option>
+            </select>
+
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Fecha creación</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="task : ${tasks}">
+
+                    <td th:text="${task.id}"></td>
+
+                    <td th:text="${task.title}"></td>
+
+                    <td th:text="${task.description}"></td>
+
+                    <td th:text="${task.dateCreation}"></td>
+
+                    <td>
+                        <span class="status" th:text="${task.state}">
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <button class="btn-edit" th:onclick="'editTask(' + ${task.id} + ')'">
+                            Editar
+                        </button>
+
+                        <button class="btn-delete" th:onclick="'deleteTask(' + ${task.id} + ')'">
+                            Eliminar
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div id="createModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Nueva tarea</h2>
+
+            <label>Título</label>
+            <input type="text" id="createTitle">
+
+            <label>Descripción</label>
+            <textarea id="createDescription"></textarea>
+
+            <label>Estado</label>
+            <select id="createState">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Completada">Completada</option>
+            </select>
+
+            <div class="modal-buttons">
+
+                <button class="btn-save" onclick="createTask()">
+                    Guardar
+                </button>
+
+                <button class="btn-cancel" onclick="closeCreateModal()">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="editModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Editar tarea</h2>
+
+            <input type="hidden" id="editId">
+
+            <label>Título</label>
+            <input type="text" id="editTitle">
+
+            <label>Descripción</label>
+            <textarea id="editDescription"></textarea>
+
+            <label>Estado</label>
+            <select id="editState">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Completada">Completada</option>
+            </select>
+
+            <div class="modal-buttons">
+
+                <button class="btn-save" onclick="updateTask()">
+                    Guardar
+                </button>
+
+                <button class="btn-cancel" onclick="closeModal()">
+                    Cancelar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
