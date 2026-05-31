@@ -97,6 +97,7 @@ public class TaskService {
             response.setTitle(task.getTitle());
             response.setDescription(task.getDescription());
             response.setDateCreation(task.getDateCreation());
+            response.setState(task.getState());
 
             responses.add(response);
         }
