@@ -106,4 +106,29 @@ public class TaskService {
 
     }
 
+    public List<TaskResponse> getTasksByState(String state) {
+
+    List<TaskEntity> tasks =
+            taskRepository.findByState(state);
+
+    List<TaskResponse> responses =
+            new ArrayList<>();
+
+    for (TaskEntity task : tasks) {
+
+        TaskResponse response =
+                new TaskResponse();
+
+        response.setId(task.getId());
+        response.setTitle(task.getTitle());
+        response.setDescription(task.getDescription());
+        response.setState(task.getState());
+        response.setDateCreation(task.getDateCreation());
+
+        responses.add(response);
+    }
+
+    return responses;
+}
+
 }

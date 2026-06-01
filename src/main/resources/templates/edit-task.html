@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Tarea</title>
+
+    <link rel="stylesheet" th:href="@{/css/Task.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Editar Tarea</h1>
+
+    <form
+        th:action="@{/tasks/update/{id}(id=${task.id})}"
+        method="post">
+
+        <label>Título</label>
+
+        <input
+            type="text"
+            name="title"
+            th:value="${task.title}"
+            required>
+
+        <label>Descripción</label>
+
+        <textarea
+            name="description"
+            required
+            th:text="${task.description}">
+        </textarea>
+
+        <label>Estado</label>
+
+        <select name="state">
+
+            <option
+                value="Pendiente"
+                th:selected="${task.state == 'Pendiente'}">
+
+                Pendiente
+
+            </option>
+
+            <option
+                value="En proceso"
+                th:selected="${task.state == 'En proceso'}">
+
+                En proceso
+
+            </option>
+
+            <option
+                value="Completada"
+                th:selected="${task.state == 'Completada'}">
+
+                Completada
+
+            </option>
+
+        </select>
+
+        <div class="actions">
+
+            <button
+                type="submit"
+                class="btn-primary">
+
+                Actualizar
+
+            </button>
+
+            <a
+                th:href="@{/}"
+                class="btn-delete">
+
+                Cancelar
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

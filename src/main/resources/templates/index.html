@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Tareas</title>
 
     <link rel="stylesheet" th:href="@{/css/Task.css}">
@@ -11,38 +10,69 @@
 
 <body>
 
-    <script th:src="@{/js/Task.js}"></script>
-
     <div class="container">
 
         <header>
+
             <h1>Gestión de Tareas</h1>
 
-            <button class="btn-primary" onclick="openCreateModal()">
+            <a th:href="@{/tasks/new}" class="btn-primary">
                 + Nueva tarea
-            </button>
+            </a>
+
         </header>
 
-        <div class="filters">
+        <!-- Buscar por ID -->
+        <form method="get" th:action="@{/}" class="filters">
 
-            <input type="number" id="taskId" placeholder="Buscar tarea por ID">
+            <input
+                type="number"
+                name="id"
+                placeholder="Buscar tarea por ID">
 
-            <button class="btn-primary" onclick="searchTask()">
+            <button
+                type="submit"
+                class="btn-primary">
                 Buscar
             </button>
 
-            <select id="stateFilter" onchange="filterByState()">
-                <option value="Todos">Todos los estados</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="En proceso">En proceso</option>
-                <option value="Completada">Completada</option>
+        </form>
+
+        <!-- Filtrar por estado -->
+        <form method="get" th:action="@{/}" class="filters">
+
+            <select name="state">
+
+                <option value="">
+                    Todos los estados
+                </option>
+
+                <option value="Pendiente">
+                    Pendiente
+                </option>
+
+                <option value="En proceso">
+                    En proceso
+                </option>
+
+                <option value="Completada">
+                    Completada
+                </option>
+
             </select>
 
-        </div>
+            <button
+                type="submit"
+                class="btn-primary">
+                Filtrar
+            </button>
+
+        </form>
 
         <table>
 
             <thead>
+
                 <tr>
                     <th>ID</th>
                     <th>Título</th>
@@ -51,6 +81,7 @@
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
+
             </thead>
 
             <tbody>
@@ -66,19 +97,47 @@
                     <td th:text="${task.dateCreation}"></td>
 
                     <td>
-                        <span class="status" th:text="${task.state}">
+
+                        <span
+                            th:if="${task.state == 'Pendiente'}"
+                            class="status status-pendiente">
+                            Pendiente
                         </span>
+
+                        <span
+                            th:if="${task.state == 'En proceso'}"
+                            class="status status-proceso">
+                            En proceso
+                        </span>
+
+                        <span
+                            th:if="${task.state == 'Completada'}"
+                            class="status status-completada">
+                            Completada
+                        </span>
+
                     </td>
 
                     <td>
 
-                        <button class="btn-edit" th:onclick="'editTask(' + ${task.id} + ')'">
+                        <a
+                            th:href="@{/tasks/edit/{id}(id=${task.id})}"
+                            class="btn-edit">
                             Editar
-                        </button>
+                        </a>
 
-                        <button class="btn-delete" th:onclick="'deleteTask(' + ${task.id} + ')'">
-                            Eliminar
-                        </button>
+                        <form
+                            th:action="@{/tasks/delete/{id}(id=${task.id})}"
+                            method="post"
+                            style="display:inline;">
+
+                            <button
+                                type="submit"
+                                class="btn-delete">
+                                Eliminar
+                            </button>
+
+                        </form>
 
                     </td>
 
@@ -87,78 +146,6 @@
             </tbody>
 
         </table>
-
-    </div>
-
-    <div id="createModal" class="modal">
-
-        <div class="modal-content">
-
-            <h2>Nueva tarea</h2>
-
-            <label>Título</label>
-            <input type="text" id="createTitle">
-
-            <label>Descripción</label>
-            <textarea id="createDescription"></textarea>
-
-            <label>Estado</label>
-            <select id="createState">
-                <option value="Pendiente">Pendiente</option>
-                <option value="En proceso">En proceso</option>
-                <option value="Completada">Completada</option>
-            </select>
-
-            <div class="modal-buttons">
-
-                <button class="btn-save" onclick="createTask()">
-                    Guardar
-                </button>
-
-                <button class="btn-cancel" onclick="closeCreateModal()">
-                    Cancelar
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div id="editModal" class="modal">
-
-        <div class="modal-content">
-
-            <h2>Editar tarea</h2>
-
-            <input type="hidden" id="editId">
-
-            <label>Título</label>
-            <input type="text" id="editTitle">
-
-            <label>Descripción</label>
-            <textarea id="editDescription"></textarea>
-
-            <label>Estado</label>
-            <select id="editState">
-                <option value="Pendiente">Pendiente</option>
-                <option value="En proceso">En proceso</option>
-                <option value="Completada">Completada</option>
-            </select>
-
-            <div class="modal-buttons">
-
-                <button class="btn-save" onclick="updateTask()">
-                    Guardar
-                </button>
-
-                <button class="btn-cancel" onclick="closeModal()">
-                    Cancelar
-                </button>
-
-            </div>
-
-        </div>
 
     </div>
 
