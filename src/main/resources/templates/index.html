@@ -23,22 +23,31 @@
             </button>
         </header>
 
-        <div class="filters">
+        <form method="get" action="/" class="filters">
 
-            <input type="number" id="taskId" placeholder="Buscar tarea por ID">
+            <select name="state">
 
-            <button class="btn-primary" onclick="searchTask()">
-                Buscar
-            </button>
+                <option value="">Todos los estados</option>
 
-            <select id="stateFilter" onchange="filterByState()">
-                <option value="Todos">Todos los estados</option>
-                <option value="Pendiente">Pendiente</option>
-                <option value="En proceso">En proceso</option>
-                <option value="Completada">Completada</option>
+                <option value="Pendiente" th:selected="${state == 'Pendiente'}">
+                    Pendiente
+                </option>
+
+                <option value="En proceso" th:selected="${state == 'En proceso'}">
+                    En proceso
+                </option>
+
+                <option value="Completada" th:selected="${state == 'Completada'}">
+                    Completada
+                </option>
+
             </select>
 
-        </div>
+            <button type="submit" class="btn-primary">
+                Filtrar
+            </button>
+
+        </form>
 
         <table>
 
