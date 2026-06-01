@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Tarea</title>
+
+    <link rel="stylesheet" th:href="@{/css/Task.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Nueva Tarea</h1>
+
+    <form th:action="@{/tasks/create}" method="post">
+
+        <label>Título</label>
+
+        <input
+            type="text"
+            name="title"
+            required>
+
+        <label>Descripción</label>
+
+        <textarea
+            name="description"
+            required>
+        </textarea>
+
+        <label>Estado</label>
+
+        <select name="state">
+
+            <option value="Pendiente">
+                Pendiente
+            </option>
+
+            <option value="En proceso">
+                En proceso
+            </option>
+
+            <option value="Completada">
+                Completada
+            </option>
+
+        </select>
+
+        <div class="actions">
+
+            <button
+                type="submit"
+                class="btn-primary">
+
+                Guardar
+
+            </button>
+
+            <a
+                th:href="@{/}"
+                class="btn-delete">
+
+                Cancelar
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
